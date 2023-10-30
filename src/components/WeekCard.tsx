@@ -183,7 +183,7 @@ const WeekCard: React.FC<Props> = ({
           className="w-full hover:cursor-pointer"
           onClick={() => setActiveWeek()}
         >
-          <div className="flex space-x-1 justify-between font-bold">
+          <div className="flex space-x-1 justify-between font-bold text-primary">
             {title}{" "}
             <span>
               <ChevronDoubleDownIcon className="h-6 w-6 hover:cursor-pointer text-primary" />
