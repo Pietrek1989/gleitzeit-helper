@@ -8,14 +8,17 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: rgb(47, 46, 46);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-bgprimary;
 }
 
 a {
@@ -49,4 +52,51 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+input {
+  border: solid grey 1px;
+  padding-inline: 5px;
+  padding-block: 0px;
+  /* margin-inline: 2px; */
+}
+input:hover {
+  cursor: pointer;
+}
+input:active {
+  border: #488cac;
+}
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg)
+    brightness(95%) contrast(80%);
+  color: #488cac !important;
+}
+
+/* .week-card-entering,
+.week-card-exiting,
+.week-card-exited {
+  opacity: 0;
+  max-height: 50px;
+  transition:
+    opacity 2s,
+    max-height 2s;
+}
+
+.week-card-entered,
+.week-card-entering-active,
+.week-card-exiting-active {
+  opacity: 1;
+  max-height: 1000px;
+  transition:
+    opacity 2s,
+    max-height 2s;
+} */
+
+.accordion-content {
+  -webkit-transition: max-height 0.4s linear;
+  -moz-transition: max-height 0.4s linear;
+  -ms-transition: max-height 0.4s linear;
+  -o-transition: max-height 0.4s linear;
+  transition: max-height 0.4s linear;
+  overflow: hidden;
 }

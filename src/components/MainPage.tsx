@@ -1,29 +1,90 @@
+// MainPage.tsx
 import React, { useState } from "react";
-import "../index.css";
-import DayCard from "./DayCard";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
-import { Day } from "../interfaces";
+import { Week } from "../interfaces";
+import WeekCard from "./WeekCard";
+import { motion, AnimatePresence } from "framer-motion";
+import { Toaster, toast } from "sonner";
 
 const MainPage: React.FC = () => {
-  const [allDays, setAllDays] = useState<Day[]>([
-    { weekTitle: "This Week", id: 0 },
-  ]);
+  const [allWeeks, setAllWeeks] = useState<Week[]>([]);
+  const [activeWeeks, setActiveWeeks] = useState<{ [key: number]: boolean }>(
+    {}
+  );
 
-  const addDay = () => {
-    setAllDays([...allDays, { id: new Date().getTime() }]);
+  const toggleActiveWeek = (id: number) => {
+    setActiveWeeks((prevActiveWeeks) => ({
+      ...prevActiveWeeks,
+      [id]: !prevActiveWeeks[id],
+    }));
+  };
+
+  const generateWeekTitle = (offset: number = 0) => {
+    const today = new Date();
+    const currentDay = today.getDay();
+    const daysUntilMonday = currentDay === 0 ? -6 : 1 - currentDay;
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() + daysUntilMonday + 7 * offset);
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 4); // End on Friday
+
+    const formatDate = (date: Date) => {
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
+    return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+  };
+
+  const addWeek = () => {
+    const offset = allWeeks.length;
+    const newWeekTitle = generateWeekTitle(offset);
+
+    setAllWeeks([
+      ...allWeeks,
+      { weekTitle: newWeekTitle, id: new Date().getTime() },
+    ]);
+    toast.success("Week added");
+  };
+
+  const deleteWeek = (id: number) => {
+    const filteredWeeks = allWeeks.filter((week) => week.id !== id);
+    setAllWeeks(filteredWeeks);
+    toast.error("Week has been deleted");
   };
 
   return (
-    <div>
-      <h1 className="text-5xl font-bold underline">Hello world!</h1>
-      {allDays.map((day, index) => (
-        <DayCard key={day.id} title={day.weekTitle || `Day ${index + 1}`} />
-      ))}
-      <PlusCircleIcon
-        className="h-6 w-6 text-blue-500 cursor-pointer"
-        onClick={addDay}
-      />
-    </div>
+    <section>
+      <Toaster richColors closeButton />
+      <div className="flex  items-center  flex-wrap  justify-center">
+        <div className="w-full mx-10">
+          <PlusCircleIcon
+            className="h-14 w-14 m-auto flex w-full text-primary cursor-pointer ml-5"
+            onClick={addWeek}
+          />
+          <AnimatePresence>
+            {[...allWeeks].reverse().map((week: Week) => (
+              <motion.div
+                key={week.id}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <WeekCard
+                  title={week.weekTitle}
+                  isActive={activeWeeks[week.id]}
+                  setActiveWeek={() => toggleActiveWeek(week.id)}
+                  deleteWeek={() => deleteWeek(week.id)}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
+    </section>
   );
 };
 

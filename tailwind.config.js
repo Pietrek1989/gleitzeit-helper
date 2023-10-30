@@ -11,13 +11,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#a39a93",
+        primary: "#488CAC",
         secondary: "#E9DBD2",
         third: "#d2e4e9",
         fourth: "#FFFFF7",
         fifth: "#93a0a3",
         sixth: "#8798AD",
-        bgprimary: "#ebf1f4",
+        bgprimary: "#f8f7f7",
         bgsecondary: "#ffff",
         dbgprimary: "#252E42",
         dbgsecondary: "#2F3B52",
