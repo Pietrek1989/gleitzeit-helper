@@ -86,6 +86,13 @@ const WeekCard: React.FC<Props> = ({
     return totalHours.toFixed(2);
   };
 
+  const formatHours = (hours: number) => {
+    const floorHours = Math.floor(Math.abs(hours));
+    const minutes = Math.round((Math.abs(hours) % 1) * 60);
+    return `${hours < 0 ? "-" : ""}${floorHours
+      .toString()
+      .padStart(2, "0")} H ${minutes.toString().padStart(2, "0")} m`;
+  };
   useEffect(() => {
     let totalHours = 0;
 
@@ -157,19 +164,11 @@ const WeekCard: React.FC<Props> = ({
 
           <div className="text-xl mt-5">
             <hr className="mt-2" />
-            You worked
-            <span className="font-bold">{` ${Math.floor(
-              weekHours
-            )} H ${Math.round((weekHours % 1) * 60)} m`}</span>
+            You worked{" "}
+            <span className="font-bold">{formatHours(weekHours)}</span>
           </div>
           <div className="text-xl">
-            {" "}
-            <span className="font-bold">
-              {" "}
-              {`  ${Math.floor(remainingHours)} H ${Math.round(
-                (remainingHours % 1) * 60
-              )} m `}
-            </span>
+            <span className="font-bold">{formatHours(remainingHours)}</span>{" "}
             left to reach 38.5 hours
           </div>
           <button
