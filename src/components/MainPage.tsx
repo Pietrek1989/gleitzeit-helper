@@ -1,5 +1,5 @@
 // MainPage.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Week } from "../interfaces";
 import WeekCard from "./WeekCard";
@@ -11,6 +11,7 @@ const MainPage: React.FC = () => {
   const [activeWeeks, setActiveWeeks] = useState<{ [key: number]: boolean }>(
     {}
   );
+  const [isDataLoaded, setDataLoaded] = useState(false);
 
   const toggleActiveWeek = (id: number) => {
     setActiveWeeks((prevActiveWeeks) => ({
@@ -54,6 +55,23 @@ const MainPage: React.FC = () => {
     setAllWeeks(filteredWeeks);
     toast.error("Week has been deleted");
   };
+
+  useEffect(() => {
+    // Load weeks from local storage
+
+    const savedWeeks = localStorage.getItem("allWeeks");
+    if (savedWeeks) {
+      setAllWeeks(JSON.parse(savedWeeks));
+    }
+    setDataLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    // Save weeks to local storage whenever it changes
+    if (isDataLoaded) {
+      localStorage.setItem("allWeeks", JSON.stringify(allWeeks));
+    }
+  }, [allWeeks, isDataLoaded]);
 
   return (
     <section>

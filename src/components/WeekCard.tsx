@@ -21,6 +21,8 @@ const WeekCard: React.FC<Props> = ({
   deleteWeek,
 }) => {
   const [weekTitle, setWeekTitle] = useState(title);
+  const [isDataLoaded, setDataLoaded] = useState(false);
+
   const [daysData, setDaysData] = useState<Day[]>([
     {
       day: "Monday",
@@ -110,6 +112,19 @@ const WeekCard: React.FC<Props> = ({
     setWeekTitle(newTitle);
   }, [startDate, endDate]);
 
+  useEffect(() => {
+    const savedDaysData = localStorage.getItem(title);
+    if (savedDaysData) {
+      setDaysData(JSON.parse(savedDaysData));
+    }
+    setDataLoaded(true);
+  }, [title]);
+
+  useEffect(() => {
+    if (isDataLoaded) {
+      localStorage.setItem(title, JSON.stringify(daysData));
+    }
+  }, [daysData, title, isDataLoaded]);
   return (
     <motion.div
       initial={{ maxHeight: isActive ? "1500px" : "4rem" }}
