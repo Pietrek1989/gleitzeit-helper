@@ -89,7 +89,9 @@ const MainPage: React.FC = () => {
   const confirmClearAllWeeks = () => {
     localStorage.removeItem("allWeeks"); // Clear 'allWeeks' from local storage
     allWeeks.forEach((week) => {
-      localStorage.removeItem(week.weekTitle); // Clear each 'WeekCard' from local storage
+      if (week.weekTitle) {
+        localStorage.removeItem(week.weekTitle);
+      }
     });
     setAllWeeks([]); // Reset state
     toast.error("All weeks have been cleared");
@@ -132,7 +134,7 @@ const MainPage: React.FC = () => {
                 transition={{ duration: 0.5 }}
               >
                 <WeekCard
-                  title={week.weekTitle}
+                  title={week.weekTitle || "Default Title"}
                   isActive={activeWeeks[week.id]}
                   setActiveWeek={() => toggleActiveWeek(week.id)}
                   deleteWeek={() => deleteWeek(week.id)}

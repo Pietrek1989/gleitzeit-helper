@@ -15,6 +15,12 @@ const InputFields: React.FC<Props> = ({
   index,
   calculateDayHours,
 }) => {
+  const autoFillTime = () => {
+    const updatedData = [...daysData];
+    updatedData[index].start = "08:00";
+    updatedData[index].end = "17:00";
+    setDaysData(updatedData);
+  };
   return (
     <>
       <div className="flex space-x-1 justify-around md:justify-between items-center ">
@@ -67,6 +73,15 @@ const InputFields: React.FC<Props> = ({
             )
               .toString()
               .padStart(2, "0")} m`}
+          </span>
+          <span>
+            {" "}
+            <button
+              onClick={autoFillTime}
+              className="ml-2 p-1 bg-primary text-white"
+            >
+              Fill
+            </button>
           </span>
         </div>
       </div>
