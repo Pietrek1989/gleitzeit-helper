@@ -118,6 +118,11 @@ const MainPage: React.FC = () => {
   return (
     <section>
       <Toaster richColors closeButton />
+      <img
+        src="/public/gleitzeit-helper-high-resolution-logo-transparent.png"
+        alt="logo of gleitzeit helper"
+        className="w-40 mt-2 ml-3"
+      />
       <div className="flex  items-center  flex-wrap  justify-center">
         <div className="w-full mx-10">
           <PlusCircleIcon
