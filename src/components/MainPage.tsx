@@ -4,6 +4,7 @@ import { Week } from "../interfaces";
 import WeekCard from "./WeekCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toaster, toast } from "sonner";
+import Modal from "react-modal";
 
 const MainPage: React.FC = () => {
   const [allWeeks, setAllWeeks] = useState<Week[]>([]);
@@ -11,6 +12,7 @@ const MainPage: React.FC = () => {
     {}
   );
   const [isDataLoaded, setDataLoaded] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleActiveWeek = (id: number) => {
     setActiveWeeks((prevActiveWeeks) => ({
@@ -81,17 +83,17 @@ const MainPage: React.FC = () => {
   };
 
   const clearAllWeeks = () => {
-    const userConfirmed = window.confirm(
-      "Are you sure you want to clear all data?"
-    );
-    if (userConfirmed) {
-      localStorage.removeItem("allWeeks"); // Clear 'allWeeks' from local storage
-      allWeeks.forEach((week) => {
-        localStorage.removeItem(week.weekTitle); // Clear each 'WeekCard' from local storage
-      });
-      setAllWeeks([]); // Reset state
-      toast.error("All weeks have been cleared");
-    }
+    setIsModalOpen(true);
+  };
+
+  const confirmClearAllWeeks = () => {
+    localStorage.removeItem("allWeeks"); // Clear 'allWeeks' from local storage
+    allWeeks.forEach((week) => {
+      localStorage.removeItem(week.weekTitle); // Clear each 'WeekCard' from local storage
+    });
+    setAllWeeks([]); // Reset state
+    toast.error("All weeks have been cleared");
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -159,6 +161,28 @@ const MainPage: React.FC = () => {
           Clear all data?
         </span>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="Confirmation Modal"
+        className="bg-white rounded p-4 fixed top-1/2 "
+      >
+        <h1 className="text-xl mb-4">
+          Are you sure you want to clear all data?
+        </h1>
+        <button
+          onClick={confirmClearAllWeeks}
+          className="bg-red-500 text-white px-4 py-1 rounded mr-2"
+        >
+          Yes
+        </button>
+        <button
+          onClick={() => setIsModalOpen(false)}
+          className="bg-gray-300 text-black px-4 py-1 rounded ml-2"
+        >
+          No
+        </button>
+      </Modal>
     </section>
   );
 };
