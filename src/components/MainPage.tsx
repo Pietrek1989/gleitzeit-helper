@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Week } from "../interfaces";
 import WeekCard from "./WeekCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toaster, toast } from "sonner";
+import { Tooltip, Button } from "@material-tailwind/react";
 
 const MainPage: React.FC = () => {
   const [allWeeks, setAllWeeks] = useState<Week[]>([]);
@@ -135,12 +136,33 @@ const MainPage: React.FC = () => {
           </AnimatePresence>
         </div>
       </div>
-      <button
-        onClick={clearAllWeeks}
-        className="text-red-500 hover:text-red-700 fixed bottom-0 right-5"
-      >
-        Clear All Weeks
-      </button>
+      {/* <button
+ 
+        >
+        </button> */}
+
+      <div className="group justify-center">
+        <button
+          onClick={clearAllWeeks}
+          className="text-red-500 hover:text-red-700 fixed bottom-2 right-7 clear-data-button w-4 flex justify-center "
+        >
+          {" "}
+          <span>
+            <TrashIcon className="w-5 h-5" />
+          </span>
+        </button>
+        <span className="absolute bottom-14 right-1 scale-0 rounded bg-gray-800 p-3 text-xs text-white group-hover:scale-100">
+          Clear all data?
+        </span>
+      </div>
+      {/* <ul className="wrapper">
+        <li className="icon instagram">
+          <span className="tooltip">Instagram</span>
+          <span>
+            <i className="fab fa-instagram"></i>
+          </span>
+        </li>
+      </ul> */}
     </section>
   );
 };
