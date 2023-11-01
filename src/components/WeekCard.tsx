@@ -20,7 +20,6 @@ const WeekCard: React.FC<Props> = ({
   setActiveWeek,
   deleteWeek,
 }) => {
-  const [weekTitle, setWeekTitle] = useState(title);
   const [isDataLoaded, setDataLoaded] = useState(false);
 
   const [daysData, setDaysData] = useState<Day[]>([
@@ -106,11 +105,6 @@ const WeekCard: React.FC<Props> = ({
 
     setRemainingHours(parseFloat((38.5 - totalHours).toFixed(2)));
   }, [daysData]);
-
-  useEffect(() => {
-    const newTitle = `${startDate.toDateString()} - ${endDate.toDateString()}`;
-    setWeekTitle(newTitle);
-  }, [startDate, endDate]);
 
   useEffect(() => {
     const savedDaysData = localStorage.getItem(title);

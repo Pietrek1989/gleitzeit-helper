@@ -1,4 +1,3 @@
-// MainPage.tsx
 import React, { useState, useEffect } from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Week } from "../interfaces";
@@ -40,13 +39,38 @@ const MainPage: React.FC = () => {
   };
 
   const addWeek = () => {
-    const offset = allWeeks.length;
+    let offset = 0; // Default offset for the first week
+
+    if (allWeeks.length > 0) {
+      // Fetch the last (furthest in the future) week
+      const lastWeek = allWeeks[allWeeks.length - 1];
+      const lastWeekEnd = lastWeek.weekTitle?.split(" - ")[1];
+      const [day, month, year] = lastWeekEnd?.split("/").map(Number) || [];
+
+      // Calculate the end date of the last week
+      const lastWeekEndDate = new Date(year || 0, (month || 1) - 1, day || 0);
+
+      // Calculate the date for the next Monday after the last week
+      const nextMondayDate = new Date(lastWeekEndDate);
+      nextMondayDate.setDate(lastWeekEndDate.getDate() + 3); // +3 to get to the next Monday
+
+      // Calculate the offset based on the next Monday
+      const today = new Date();
+      offset = Math.ceil(
+        (nextMondayDate.getTime() - today.getTime()) / (7 * 24 * 60 * 60 * 1000)
+      );
+    }
+
+    // Generate the new week title
     const newWeekTitle = generateWeekTitle(offset);
 
+    // Add the new week to the existing weeks
     setAllWeeks([
       ...allWeeks,
       { weekTitle: newWeekTitle, id: new Date().getTime() },
     ]);
+
+    // Show a toast notification
     toast.success("Week added");
   };
 
@@ -54,6 +78,15 @@ const MainPage: React.FC = () => {
     const filteredWeeks = allWeeks.filter((week) => week.id !== id);
     setAllWeeks(filteredWeeks);
     toast.error("Week has been deleted");
+  };
+
+  const clearAllWeeks = () => {
+    localStorage.removeItem("allWeeks"); // Clear 'allWeeks' from local storage
+    allWeeks.forEach((week) => {
+      localStorage.removeItem(week.weekTitle); // Clear each 'WeekCard' from local storage
+    });
+    setAllWeeks([]); // Reset state
+    toast.error("All weeks have been cleared");
   };
 
   useEffect(() => {
@@ -102,6 +135,12 @@ const MainPage: React.FC = () => {
           </AnimatePresence>
         </div>
       </div>
+      <button
+        onClick={clearAllWeeks}
+        className="text-red-500 hover:text-red-700 fixed bottom-0 right-5"
+      >
+        Clear All Weeks
+      </button>
     </section>
   );
 };
