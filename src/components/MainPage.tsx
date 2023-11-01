@@ -119,7 +119,7 @@ const MainPage: React.FC = () => {
     <section>
       <Toaster richColors closeButton />
       <img
-        src="/public/gleitzeit-helper-high-resolution-logo-transparent.png"
+        src="/gleitzeit-helper-high-resolution-logo-transparent.png"
         alt="logo of gleitzeit helper"
         className="w-40 mt-2 ml-3"
       />
