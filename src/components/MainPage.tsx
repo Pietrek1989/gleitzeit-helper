@@ -4,7 +4,6 @@ import { Week } from "../interfaces";
 import WeekCard from "./WeekCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toaster, toast } from "sonner";
-import { Tooltip, Button } from "@material-tailwind/react";
 
 const MainPage: React.FC = () => {
   const [allWeeks, setAllWeeks] = useState<Week[]>([]);
@@ -82,12 +81,17 @@ const MainPage: React.FC = () => {
   };
 
   const clearAllWeeks = () => {
-    localStorage.removeItem("allWeeks"); // Clear 'allWeeks' from local storage
-    allWeeks.forEach((week) => {
-      localStorage.removeItem(week.weekTitle); // Clear each 'WeekCard' from local storage
-    });
-    setAllWeeks([]); // Reset state
-    toast.error("All weeks have been cleared");
+    const userConfirmed = window.confirm(
+      "Are you sure you want to clear all data?"
+    );
+    if (userConfirmed) {
+      localStorage.removeItem("allWeeks"); // Clear 'allWeeks' from local storage
+      allWeeks.forEach((week) => {
+        localStorage.removeItem(week.weekTitle); // Clear each 'WeekCard' from local storage
+      });
+      setAllWeeks([]); // Reset state
+      toast.error("All weeks have been cleared");
+    }
   };
 
   useEffect(() => {
@@ -155,14 +159,6 @@ const MainPage: React.FC = () => {
           Clear all data?
         </span>
       </div>
-      {/* <ul className="wrapper">
-        <li className="icon instagram">
-          <span className="tooltip">Instagram</span>
-          <span>
-            <i className="fab fa-instagram"></i>
-          </span>
-        </li>
-      </ul> */}
     </section>
   );
 };
