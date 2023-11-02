@@ -74,7 +74,7 @@ const InputFields: React.FC<Props> = ({
               .toString()
               .padStart(2, "0")} m`}
           </span>
-          <span>
+          <span className="relative group">
             {" "}
             <button
               onClick={autoFillTime}
@@ -82,6 +82,9 @@ const InputFields: React.FC<Props> = ({
             >
               Fill
             </button>
+            <span className="absolute scale-0 right-1 text-base -top-20 w-24 text-center rounded  bg-gray-800 p-3  text-white group-hover:scale-100">
+              Autofill 8 hours
+            </span>
           </span>
         </div>
       </div>

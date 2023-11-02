@@ -94,6 +94,14 @@ const WeekCard: React.FC<Props> = ({
       .toString()
       .padStart(2, "0")} H ${minutes.toString().padStart(2, "0")} m`;
   };
+
+  const generateShareableLink = () => {
+    const uniqueID = btoa(title); // encode the title as base64 for simplicity
+    const link = `${window.location.origin}/shared/${uniqueID}`;
+    navigator.clipboard.writeText(link);
+    alert("Link copied to clipboard!");
+  };
+
   useEffect(() => {
     let totalHours = 0;
 
@@ -180,12 +188,21 @@ const WeekCard: React.FC<Props> = ({
             <span className="font-bold">{formatHours(remainingHours)}</span>{" "}
             left to reach 38.5 hours
           </div>
-          <button
-            onClick={deleteWeek}
-            className="text-red-500 ml-auto flex hover:scale-105"
-          >
-            Delete
-          </button>
+          <div className="flex ml-auto gap-2 justify-end">
+            <button
+              onClick={generateShareableLink}
+              className=" bg-primary text-white hover:scale-105"
+            >
+              Share
+            </button>
+
+            <button
+              onClick={deleteWeek}
+              className="text-red-300 bg-primary  hover:scale-105"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ) : (
         <div

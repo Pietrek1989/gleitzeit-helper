@@ -123,12 +123,13 @@ const MainPage: React.FC = () => {
         alt="logo of gleitzeit helper"
         className="w-40 mt-2 ml-3"
       />
+      <PlusCircleIcon
+        className="h-14 w-14 mx-auto  text-primary cursor-pointer ml-5 hover:brightness-75 plus-icon hover:scale-105"
+        onClick={addWeek}
+      />
+
       <div className="flex  items-center  flex-wrap  justify-center">
         <div className="w-full mx-10">
-          <PlusCircleIcon
-            className="h-14 w-14 m-auto flex w-full text-primary cursor-pointer ml-5"
-            onClick={addWeek}
-          />
           <AnimatePresence>
             {[...allWeeks].reverse().map((week: Week) => (
               <motion.div
@@ -149,23 +150,19 @@ const MainPage: React.FC = () => {
           </AnimatePresence>
         </div>
       </div>
-      {/* <button
- 
-        >
-        </button> */}
 
-      <div className="group justify-center">
+      <div className="group">
         <button
           onClick={clearAllWeeks}
-          className="text-red-500 hover:text-red-700 fixed bottom-2 right-7 clear-data-button w-4 flex justify-center "
+          className="text-white hover:brightness-80 hover:scale-105 bg-primary fixed bottom-2 right-7 clear-data-button w-4 flex justify-center "
         >
           {" "}
           <span>
             <TrashIcon className="w-5 h-5" />
           </span>
         </button>
-        <span className="absolute bottom-14 right-1 scale-0 rounded bg-gray-800 p-3 text-xs text-white group-hover:scale-100">
-          Clear all data?
+        <span className="absolute bottom-14 right-1 scale-0 rounded bg-gray-800 p-3 text-base text-white group-hover:scale-100">
+          Clear all data
         </span>
       </div>
       <Modal
