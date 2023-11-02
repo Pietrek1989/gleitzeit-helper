@@ -4,6 +4,8 @@
 
 Gleitzeit Helper is designed to simplify the management of flexible working hours. It offers a convenient way to track work schedules over multiple weeks. Users can input their daily start and finish times as well as lunch breaks. The application will then automatically calculate the total number of hours worked and the remaining hours needed to meet the minimum weekly working hours.
 
+![gleitzeit-helper](https://github.com/Pietrek1989/gleitzeit-helper/assets/68666992/59c72b6c-a258-4dd5-bb05-5b44accbcd56)
+
 ## Table of Contents
 
 - [Features](#features)
@@ -27,7 +29,6 @@ Gleitzeit Helper is designed to simplify the management of flexible working hour
 - [TailwindCSS](https://tailwindcss.com/) for styling.
 - [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) for data persistence.
 
-![gleitzeit-helper](https://github.com/Pietrek1989/gleitzeit-helper/assets/68666992/59c72b6c-a258-4dd5-bb05-5b44accbcd56)
 
 ## How to Run Locally
 
