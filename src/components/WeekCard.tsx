@@ -99,7 +99,7 @@ const WeekCard: React.FC<Props> = ({
     const uniqueID = btoa(title); // encode the title as base64 for simplicity
     const link = `${window.location.origin}/shared/${uniqueID}`;
     navigator.clipboard.writeText(link);
-    alert("Link copied to clipboard!");
+    alert("Link copied to clipboard!🧐");
   };
 
   useEffect(() => {

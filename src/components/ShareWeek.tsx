@@ -6,8 +6,15 @@ import ErrorFallback from "./ErrorFallback";
 
 const ShareWeek: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const [error, setError] = useState<string | null>(null);
 
-  const weekTitle = atob(id ?? "");
+  let weekTitle: string = "";
+
+  try {
+    weekTitle = atob(id ?? "");
+  } catch (e) {
+    setError("Failed to decode week information.");
+  }
 
   const [weekHours, setWeekHours] = useState(0);
   const [remainingHours, setRemainingHours] = useState(38.5);
@@ -54,8 +61,15 @@ const ShareWeek: React.FC = () => {
     setRemainingHours(parseFloat((38.5 - totalHours).toFixed(2)));
   }, [daysData]);
 
-  if (!localStorage.getItem(weekTitle)) return <ErrorFallback />;
+  useEffect(() => {
+    if (weekTitle && !localStorage.getItem(weekTitle)) {
+      setError("Week data not found.");
+    }
+  }, [weekTitle]);
 
+  if (error) {
+    return <ErrorFallback message={error} />;
+  }
   return (
     <div
       className={`border p-4 my-2 w-full bg-bgsecondary rounded-lg shadow-2xl max-h-[1500px]`}
