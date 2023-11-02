@@ -27,7 +27,7 @@ Gleitzeit Helper is designed to simplify the management of flexible working hour
 - [TailwindCSS](https://tailwindcss.com/) for styling.
 - [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) for data persistence.
 
-![Gleitzeit Helper Interface](https://user-images.githubusercontent.com/68666992/6cb8cea8-e7b7-4442-9510-baa61acbb4ce)
+![gleitzeit-helper](https://github.com/Pietrek1989/gleitzeit-helper/assets/68666992/59c72b6c-a258-4dd5-bb05-5b44accbcd56)
 
 ## How to Run Locally
 
