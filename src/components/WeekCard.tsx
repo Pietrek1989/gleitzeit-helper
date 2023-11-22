@@ -94,10 +94,13 @@ const WeekCard: React.FC<Props> = ({
       .toString()
       .padStart(2, "0")} H ${minutes.toString().padStart(2, "0")} m`;
   };
-
   const generateShareableLink = () => {
-    const uniqueID = btoa(title); // encode the title as base64 for simplicity
-    const link = `${window.location.origin}/shared/${uniqueID}`;
+    const weekData = {
+      title,
+      daysData,
+    };
+    const encodedData = btoa(JSON.stringify(weekData));
+    const link = `${window.location.origin}/shared/${encodedData}`;
     navigator.clipboard.writeText(link);
     alert("Link copied to clipboard!🧐");
   };
