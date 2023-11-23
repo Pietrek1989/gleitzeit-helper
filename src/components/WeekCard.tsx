@@ -94,16 +94,36 @@ const WeekCard: React.FC<Props> = ({
       .toString()
       .padStart(2, "0")} H ${minutes.toString().padStart(2, "0")} m`;
   };
-  const generateShareableLink = () => {
-    const weekData = {
-      title,
-      daysData,
-    };
-    const encodedData = btoa(JSON.stringify(weekData));
-    const link = `${window.location.origin}/shared/${encodedData}`;
-    navigator.clipboard.writeText(link);
-    alert("Link copied to clipboard!🧐");
+  const generateShareableLink = async () => {
+    const originalLink = `${window.location.origin}/shared/${btoa(title)}`;
+
+    try {
+      const response = await fetch(`https://api.tinyurl.com/create`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer GeecBkdri4F68P5Ys8HiXGp8E478KJuUweIuXsrYAq8rZX8A5AmYMEmOcbMN`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url: originalLink }),
+      });
+
+      if (response.ok) {
+        const urlData = await response.json();
+        navigator.clipboard.writeText(urlData.data.tiny_url);
+        alert("Shortened link copied to clipboard!");
+      } else {
+        // Fallback if URL shortening fails
+        navigator.clipboard.writeText(originalLink);
+        alert("Original link copied to clipboard!");
+      }
+    } catch (error) {
+      console.error("Error shortening URL:", error);
+      // Fallback in case of an error
+      navigator.clipboard.writeText(originalLink);
+      alert("Original link copied to clipboard!");
+    }
   };
+
   // GeecBkdri4F68P5Ys8HiXGp8E478KJuUweIuXsrYAq8rZX8A5AmYMEmOcbMN
 
   useEffect(() => {
