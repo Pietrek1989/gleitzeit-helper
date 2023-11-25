@@ -15,18 +15,21 @@ const ShareWeek: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log("id", id);
     if (id) {
       try {
         const decodedData = atob(id);
-        const parsedData: WeekData = JSON.parse(decodedData);
+        const parsedData = JSON.parse(decodedData);
         setWeekData(parsedData);
       } catch (e) {
+        console.error("Decoding error:", e);
         setError("Invalid week data. Please check your link.");
       }
     } else {
       setError("No week data provided.");
     }
   }, [id]);
+
   const formatHours = (hours: number): string => {
     const floorHours = Math.floor(Math.abs(hours));
     const minutes = Math.round((Math.abs(hours) % 1) * 60);

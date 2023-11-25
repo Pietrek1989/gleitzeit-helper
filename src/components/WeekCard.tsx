@@ -94,8 +94,24 @@ const WeekCard: React.FC<Props> = ({
       .toString()
       .padStart(2, "0")} H ${minutes.toString().padStart(2, "0")} m`;
   };
+  // const generateShareableLink = () => {
+  //   const weekData = {
+  //     title,
+  //     daysData,
+  //   };
+  //   const encodedData = btoa(JSON.stringify(weekData));
+  //   const link = `${window.location.origin}/shared/${encodedData}`;
+  //   navigator.clipboard.writeText(link);
+  //   alert("Link copied to clipboard!🧐");
+  // };
+
   const generateShareableLink = async () => {
-    const originalLink = `${window.location.origin}/shared/${btoa(title)}`;
+    const weekData = {
+      title,
+      daysData,
+    };
+    const encodedData = btoa(JSON.stringify(weekData));
+    const originalLink = `${window.location.origin}/shared/${encodedData}`;
 
     try {
       const response = await fetch(`https://api.tinyurl.com/create`, {
@@ -110,6 +126,7 @@ const WeekCard: React.FC<Props> = ({
       if (response.ok) {
         const urlData = await response.json();
         navigator.clipboard.writeText(urlData.data.tiny_url);
+        console.log(urlData, "urldata");
         alert("Shortened link copied to clipboard!");
       } else {
         // Fallback if URL shortening fails
@@ -123,7 +140,6 @@ const WeekCard: React.FC<Props> = ({
       alert("Original link copied to clipboard!");
     }
   };
-
   // GeecBkdri4F68P5Ys8HiXGp8E478KJuUweIuXsrYAq8rZX8A5AmYMEmOcbMN
 
   useEffect(() => {
