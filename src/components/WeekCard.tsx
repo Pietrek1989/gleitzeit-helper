@@ -127,7 +127,7 @@ const WeekCard: React.FC<Props> = ({
         const urlData = await response.json();
         navigator.clipboard.writeText(urlData.data.tiny_url);
         console.log(urlData, "urldata");
-        alert("Shortened link copied to clipboard!");
+        alert("Link copied to clipboard!🧐");
       } else {
         // Fallback if URL shortening fails
         navigator.clipboard.writeText(originalLink);
